@@ -4,82 +4,111 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.util.ArrayList; 
 
+import javax.swing.text.Segment;
+
+
 
 public class Snake {
+	ArrayList<Block> bloecke;
+	SpielSnake game;
+	boolean rechts, links, oben, unten;
+	long pause = 100;
+	long zeitLetztePause = 0;
+	Block kopf;
 	
-	private static int x;
-	private static int y;
-	private int oldx;
-	private int oldy;
-	private int Geschwindigkeit = 1;
-	
-	
-	public Snake(int xPos, int yPos, Color f) {
+	public Snake(int xPos, int yPos, SpielSnake game) {
+		this.game = game;
+		bloecke = new ArrayList<Block>();
+		bloecke.add(new Block(xPos,yPos));
+		kopf = bloecke.get(0);
+	}
 		
-		x = xPos;
-		y = yPos;
-		snakeErzeugen();
+	public void bewegungHoch(){
+		if(!unten){
+			resetRichtung();
+			oben = true;
+		}
 	}
 	
-	public void snakeErzeugen(){
-		
-		
+	public void bewegunUnten(){
+		if(!oben){
+			resetRichtung();
+			unten = true;
+		}
 	}
 	
-	public static void moveUp(){
-		
+	public void bewegungRechts(){
+		if(!links){
+			resetRichtung();
+			rechts = true;
+		}
 	}
 	
-	public static void moveDown(){
-		
+	public void bewegungLinks(){
+		if(!rechts){
+			resetRichtung();
+			links = true;
+		}
 	}
 	
-	public static void moveRight(){
-		
-	}
-	
-	public static void moveLeft(){
-		
-	}
-	
-	public void addSegment() {
-		
-	}
-	
-    public static void wait(int milliseconds) {
-		try {
-			Thread.sleep(milliseconds);
-		} catch (InterruptedException e){}
-			// ignoring exception at the moment
+	public void blockHinzufügen() {
+		bloecke.add(new Block(bloecke.get(bloecke.size()-1).getOldX(),bloecke.get(bloecke.size()-1).getOldY()));
 	}
 
-	public void translate(int x, int y) {
-		oldx = this.x;
-		oldy = this.y;
-		this.x += x;
-		this.y += y;
+	public void anfangsRichtung(){
+		resetRichtung();
+		if(Math.random()<0.5){
+			rechts = true;
+		} else{
+			unten = true;
 		}
-	
-	public void setPosition(int x, int y) {
-		oldx = this.x;
-		oldy = this.y;
-		this.x = x;
-		this.y = y;
-		}
-	
-	public static int getXPosition() {
-		return x;
 	}
 
-	public static int getYPosition() {
-		return y;
+	public void resetRichtung() {
+		unten = false;
+		oben = false;	
+		rechts = false;	
+		links = false;	
 	}
-	
-	public int getOldX() {
-		return oldx;
+
+	public void update() {
+		if(System.currentTimeMillis() - zeitLetztePause > pause) {
+			//Kopf bewegen
+			kopfBewegen();
+			for(int i = 0;i < bloecke.size()-1;i++){
+				bloecke.get(i+1).setPosition(bloecke.get(i).getOldX(), bloecke.get(i).getOldY());
+			}
+			game.spielfeldReset();
+			for(Block i : bloecke){
+				try {
+					game.spielFeld[i.getX()][i.getY()]=true;
+				}catch(ArrayIndexOutOfBoundsException e){
+					
+				}
+			}
+			zeitLetztePause = System.currentTimeMillis();
+		}
 	}
-		 
-	public int getOldY() {
-		return oldy;
+
+	private void kopfBewegen() {
+		if(rechts){
+			kopf.verschieben(1, 0);
+		}
+		if(links){
+			kopf.verschieben(-1, 0);
+		}
+		if(oben){
+			kopf.verschieben(0, -1);
+		}
+		if(unten){
+			kopf.verschieben(0, 1);
+		}
 	}
+	public int getKopfX() {
+		return kopf.getX();
+	}
+
+	public int getKopfY() {
+		return kopf.getY();
+	}	
 }
