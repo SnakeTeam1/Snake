@@ -77,7 +77,7 @@ public class SpielSnake extends JPanel implements Runnable {
 			hintergrund = ImageIO.read(new File("./back.jpg"));
 			schlange = ImageIO.read(new File("./snake.jpg"));
 			schlangenkopf = ImageIO.read(new File("./schlangenkopf.png"));
-			essen = ImageIO.read(new File("./essen.png"));
+			essen = ImageIO.read(new File("./essen.jpg"));
 		} catch(IOException ex) {
 			//nichts tun
 		}
