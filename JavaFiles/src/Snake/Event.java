@@ -14,12 +14,14 @@ public class Event {
 		this.game = game;
 	}
 	
+	//Es wird überprüft ob ein Event eintrifft
 	public void ueberpruefen(){
 		kanibale();
 		essen();
 		crashMitWand();		
 	}
-
+	
+	//Es wird überprüft ob der Kopf in die Wand kracht
 	private void crashMitWand() {
 		if(game.snake.getKopfX() < 0){
 			gameOver();
@@ -35,15 +37,7 @@ public class Event {
 		}
 	}
 
-	public void gameOver() {
-		if (highscore < punktzahl){
-			highscore = punktzahl;
-		}
-		punktzahl = 0;
-		game.t.interrupt();
-		
-	}
-
+	//Es wird überprüft ob die Schlange sich selbst frisst
 	public void kanibale() {
 		for(int i = 1; i < game.snake.bloecke.size() - 1; i++){
 			if(game.snake.bloecke.get(i).getX() == game.snake.getKopfX() && 
@@ -54,6 +48,7 @@ public class Event {
 		
 	}
 
+	//Es wird überprüft ob die Schlange das Futter frisst
 	public void essen() {
 		if(game.snake.getKopfX() == game.essenX && game.snake.getKopfY() == game.essenY){
 			game.snake.blockHinzufügen();
@@ -61,7 +56,18 @@ public class Event {
 			punktzahl = punktzahl + spieltempo;
 		}
 	}
-
+	
+	 //Spiel ende und beginn neues Spiel
+	public void gameOver() {
+		if (highscore < punktzahl){
+			highscore = punktzahl;
+		}
+		punktzahl = 0;
+		game.t.interrupt();
+		
+	}
+	
+	//Popup Fenster für den Spielbeginn
 	public void popup() {
 		new Thread() {
 			public void run() {

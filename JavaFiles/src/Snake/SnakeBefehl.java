@@ -9,7 +9,8 @@ public class SnakeBefehl extends KeyAdapter{
 	public SnakeBefehl(Snake snake){
 		this.snake = snake;
 	}
-
+	
+	//Key Listener
 	public void keyPressed(KeyEvent e) {
 		 
 		switch(e.getKeyCode()) {

@@ -13,6 +13,7 @@ public class Block {
 		this.oldy = x;
 	}
 	
+	//Die Position des Blocks wird gesetzt
 	public void setPosition(int x, int y){
 		oldx = this.x;
 		oldy = this.y;
@@ -20,6 +21,7 @@ public class Block {
 		this.y = y;
 	}
 	
+	//Der Block wird verschoben
 	public void verschieben(int x, int y){
 		oldx = this.x;
 		oldy = this.y;
@@ -27,18 +29,22 @@ public class Block {
 		this.y += y;
 	}
 	
+	//return x Kordinate des Blocks
 	public int getX() {
 		return x;
 	}
 
+	//return y Kordinate des Blocks
 	public int getY() {
 		return y;
 	}
 	
+	//return alte x Kordinate des Blocks
 	public int getOldX() {
 		return oldx;
 	}
-		 
+	
+	//return alte y Kordinate des Blocks
 	public int getOldY() {
 		return oldy;
 	}

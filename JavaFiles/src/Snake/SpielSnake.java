@@ -62,7 +62,7 @@ public class SpielSnake extends JPanel implements Runnable {
 		frame.setResizable(false);
 		event.popup();
 	}
-
+	//Spiel wird inizialisiert
 	public void initialize(int tempo) {
 		spielfeldReset();
 		snake = new Snake(0,0,this);
@@ -79,7 +79,7 @@ public class SpielSnake extends JPanel implements Runnable {
 			schlangenkopf = ImageIO.read(new File("./schlangenkopf.png"));
 			essen = ImageIO.read(new File("./essen.png"));
 		} catch(IOException ex) {
-			
+			//nichts tun
 		}
 	}
 	
@@ -88,18 +88,17 @@ public class SpielSnake extends JPanel implements Runnable {
 		g.drawImage(hintergrund, 0, 0,hoehe+10,breite+10, null);
 		for(int x = 0 ; x < aufloesung ; x++){
 			for(int y = 0 ; y < aufloesung ; y++){
-				//if(!(x == snake.getKopfX() && y== snake.getKopfY())){	
 					if(spielFeld[x][y]){
 						g.drawImage(schlange, x*blockgroesse, y*blockgroesse,blockgroesse,blockgroesse, null);
 					}
-				//}
 			}		
 		}
 		g.drawImage(schlangenkopf, kopfX*blockgroesse, kopfY*blockgroesse,blockgroesse,blockgroesse, null);	
 		g.drawImage(essen, essenX*blockgroesse, essenY*blockgroesse,blockgroesse,blockgroesse, null);
 		setzteTitel();
 	}
-
+	
+	//Essen wird auf dem Spielfeld platziert
 	public void essenPlatzieren() {
 		ArrayList<Integer> x = new ArrayList<Integer>();
 		ArrayList<Integer> y = new ArrayList<Integer>();
@@ -132,6 +131,7 @@ public class SpielSnake extends JPanel implements Runnable {
 		event.popup();
 	}
 	
+	//Das Array spielFeld wir auf false gesetzt
 	public void spielfeldReset(){
 		for(int x = 0; x < aufloesung; x++){
 			for(int y = 0; y < aufloesung; y++){
@@ -139,6 +139,8 @@ public class SpielSnake extends JPanel implements Runnable {
 			}
 		}
 	}
+	
+	//Der Titel wird Aktualisiert
 	 public void setzteTitel(){
 			frame.setTitle("Snake von Damian, Michael und Roger! Punktzahl: "+ event.punktzahl + " Highscore: "+ event.highscore);
 	 }

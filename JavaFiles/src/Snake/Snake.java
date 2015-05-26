@@ -23,7 +23,8 @@ public class Snake {
 		bloecke.add(new Block(xPos,yPos));
 		kopf = bloecke.get(0);
 	}
-		
+	
+	//Bewegungsrichtung der Schlage wird auf Hoch gesetzt 
 	public void bewegungHoch(){
 		if(!unten && !bewegt){
 			bewegt = true;
@@ -32,6 +33,7 @@ public class Snake {
 		}
 	}
 	
+	//Bewegungsrichtung der Schlage wird auf Unten gesetzt 
 	public void bewegunUnten(){
 		if(!oben && !bewegt){
 			bewegt = true;
@@ -40,6 +42,7 @@ public class Snake {
 		}
 	}
 	
+	//Bewegungsrichtung der Schlage wird auf Rechts gesetzt 
 	public void bewegungRechts(){
 		if(!links && !bewegt){
 			bewegt = true;
@@ -48,6 +51,7 @@ public class Snake {
 		}
 	}
 	
+	//Bewegungsrichtung der Schlage wird auf Links gesetzt 
 	public void bewegungLinks(){
 		if(!rechts && !bewegt){
 			bewegt = true;
@@ -56,10 +60,12 @@ public class Snake {
 		}
 	}
 	
+	//Es wird ein Block der Schlange hinzugefügt
 	public void blockHinzufügen() {
 		bloecke.add(new Block(bloecke.get(bloecke.size()-1).getOldX(),bloecke.get(bloecke.size()-1).getOldY()));
 	}
 
+	//Die Anfangsrichtung wird per Zufall bestimmt
 	public void anfangsRichtung(){
 		resetRichtung();
 		if(Math.random()<0.5){
@@ -69,6 +75,7 @@ public class Snake {
 		}
 	}
 
+	//Die Richtung wird zurückgesetzt
 	public void resetRichtung() {
 		unten = false;
 		oben = false;	
@@ -76,6 +83,7 @@ public class Snake {
 		links = false;	
 	}
 
+	//Die Schlange wird geupdatet
 	public void update() {
 		if(System.currentTimeMillis() - zeitLetztePause > pause) {
 			//Kopf bewegen
@@ -96,6 +104,7 @@ public class Snake {
 		}
 	}
 
+	//Der Kopf wird weiter bewegt
 	private void kopfBewegen() {
 		if(rechts){
 			kopf.verschieben(1, 0);
@@ -110,10 +119,13 @@ public class Snake {
 			kopf.verschieben(0, 1);
 		}
 	}
+	
+	//return x Kordinate des Kopfes
 	public int getKopfX() {
 		return kopf.getX();
 	}
 
+	//return y Kordinate des Kopfes
 	public int getKopfY() {
 		return kopf.getY();
 	}	
