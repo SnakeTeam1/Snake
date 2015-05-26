@@ -15,6 +15,7 @@ public class Snake {
 	long pause = 100;
 	long zeitLetztePause = 0;
 	Block kopf;
+	boolean bewegt;
 	
 	public Snake(int xPos, int yPos, SpielSnake game) {
 		this.game = game;
@@ -24,28 +25,32 @@ public class Snake {
 	}
 		
 	public void bewegungHoch(){
-		if(!unten){
+		if(!unten && !bewegt){
+			bewegt = true;
 			resetRichtung();
 			oben = true;
 		}
 	}
 	
 	public void bewegunUnten(){
-		if(!oben){
+		if(!oben && !bewegt){
+			bewegt = true;
 			resetRichtung();
 			unten = true;
 		}
 	}
 	
 	public void bewegungRechts(){
-		if(!links){
+		if(!links && !bewegt){
+			bewegt = true;
 			resetRichtung();
 			rechts = true;
 		}
 	}
 	
 	public void bewegungLinks(){
-		if(!rechts){
+		if(!rechts && !bewegt){
+			bewegt = true;
 			resetRichtung();
 			links = true;
 		}
@@ -74,6 +79,7 @@ public class Snake {
 	public void update() {
 		if(System.currentTimeMillis() - zeitLetztePause > pause) {
 			//Kopf bewegen
+			bewegt = false;
 			kopfBewegen();
 			for(int i = 0;i < bloecke.size()-1;i++){
 				bloecke.get(i+1).setPosition(bloecke.get(i).getOldX(), bloecke.get(i).getOldY());

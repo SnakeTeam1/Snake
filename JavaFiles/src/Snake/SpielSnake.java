@@ -51,19 +51,19 @@ public class SpielSnake extends JPanel implements Runnable {
 
 	public SpielSnake() {
         this.setPreferredSize(new Dimension(hoehe,breite));
+        event = new Event(this);
 		frame = new JFrame();
-		frame.setTitle("Snake von Damian, Michael und Roger");
+		setzteTitel();
         frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocation(600,200);
         frame.add(this);
         frame.pack();
 		frame.setResizable(false);
-		event = new Event(this);
 		event.popup();
 	}
 
-	public void initialize() {
+	public void initialize(int tempo) {
 		spielfeldReset();
 		snake = new Snake(0,0,this);
 		snake.anfangsRichtung();
@@ -71,6 +71,7 @@ public class SpielSnake extends JPanel implements Runnable {
 		essenPlatzieren();
 		t = new Thread(this);
 		t.start();
+		snake.pause = 300/tempo;
 		frame.addKeyListener(new SnakeBefehl(snake));
 		try {
 			hintergrund = ImageIO.read(new File("./back.jpg"));
@@ -96,6 +97,7 @@ public class SpielSnake extends JPanel implements Runnable {
 		}
 		g.drawImage(schlangenkopf, kopfX*blockgroesse, kopfY*blockgroesse,blockgroesse,blockgroesse, null);	
 		g.drawImage(essen, essenX*blockgroesse, essenY*blockgroesse,blockgroesse,blockgroesse, null);
+		setzteTitel();
 	}
 
 	public void essenPlatzieren() {
@@ -137,5 +139,7 @@ public class SpielSnake extends JPanel implements Runnable {
 			}
 		}
 	}
-	
+	 public void setzteTitel(){
+			frame.setTitle("Snake von Damian, Michael und Roger! Punktzahl: "+ event.punktzahl + " Highscore: "+ event.highscore);
+	 }
 }

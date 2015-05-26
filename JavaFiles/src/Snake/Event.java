@@ -1,9 +1,14 @@
 package Snake;
 
+import java.awt.Dimension;
+
 import javax.swing.JOptionPane;
 
 public class Event {
 	SpielSnake game;
+	int highscore = 0;
+	int punktzahl = 0;
+	int spieltempo = 0;
 	
 	public Event(SpielSnake game){
 		this.game = game;
@@ -31,7 +36,12 @@ public class Event {
 	}
 
 	public void gameOver() {
+		if (highscore < punktzahl){
+			highscore = punktzahl;
+		}
+		punktzahl = 0;
 		game.t.interrupt();
+		
 	}
 
 	public void kanibale() {
@@ -48,18 +58,25 @@ public class Event {
 		if(game.snake.getKopfX() == game.essenX && game.snake.getKopfY() == game.essenY){
 			game.snake.blockHinzufügen();
 			game.essenPlatzieren();
+			punktzahl = punktzahl + spieltempo;
 		}
 	}
 
 	public void popup() {
 		new Thread() {
 			public void run() {
-				int n = JOptionPane.showConfirmDialog(game.frame, "New Game?",
-						"Question", JOptionPane.YES_NO_OPTION);
-
-				if (n == JOptionPane.OK_OPTION) {
-					game.initialize();
-				} else {
+				try{
+					Object[] options = {"Langsam", "Normal", "Schnell", "Beenden"};
+					spieltempo = JOptionPane.showOptionDialog(game.frame,"Wie schnell wollen sie spielen?",
+							"Highscore: " + highscore , JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,	options, options[1]) + 1;
+					if (spieltempo != 4) {
+						punktzahl = 0;
+						game.initialize(spieltempo);
+					} else {
+						System.exit(0);
+					}
+				}
+				catch (ArithmeticException e){
 					System.exit(0);
 				}
 			}
