@@ -1,26 +1,16 @@
 package Snake;
 
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Graphics;
-import java.awt.Image;
-
-import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import java.awt.BorderLayout;
 import java.awt.Color;
-
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
-
-import java.awt.CardLayout;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class SpielSnake extends JPanel implements Runnable {
 
@@ -74,10 +64,10 @@ public class SpielSnake extends JPanel implements Runnable {
 		snake.pause = 300/tempo;
 		frame.addKeyListener(new SnakeBefehl(snake));
 		try {
-			hintergrund = ImageIO.read(new File("./back.jpg"));
-			schlange = ImageIO.read(new File("./snake.jpg"));
-			schlangenkopf = ImageIO.read(new File("./schlangenkopf.png"));
-			essen = ImageIO.read(new File("./essen.jpg"));
+			hintergrund = ImageIO.read(new File("./img/hintergrund.jpg"));
+			schlange = ImageIO.read(new File("./img/schlange.jpg"));
+			schlangenkopf = ImageIO.read(new File("./img/schlangenkopf.png"));
+			essen = ImageIO.read(new File("./img/essen.jpg"));
 		} catch(IOException ex) {
 			//nichts tun
 		}
@@ -85,7 +75,7 @@ public class SpielSnake extends JPanel implements Runnable {
 	
 	@Override
 	public void paint(Graphics g){
-		g.drawImage(hintergrund, 0, 0,hoehe+10,breite+10, null);
+		g.drawImage(hintergrund, 0, 0,hoehe+20,breite+20, null);
 		for(int x = 0 ; x < aufloesung ; x++){
 			for(int y = 0 ; y < aufloesung ; y++){
 					if(spielFeld[x][y]){

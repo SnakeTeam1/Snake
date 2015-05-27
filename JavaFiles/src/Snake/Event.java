@@ -1,7 +1,5 @@
 package Snake;
 
-import java.awt.Dimension;
-
 import javax.swing.JOptionPane;
 
 public class Event {
@@ -9,6 +7,7 @@ public class Event {
 	int highscore = 0;
 	int punktzahl = 0;
 	int spieltempo = 0;
+	boolean wand;
 	
 	public Event(SpielSnake game){
 		this.game = game;
@@ -21,19 +20,34 @@ public class Event {
 		crashMitWand();		
 	}
 	
-	//Es wird überprüft ob der Kopf in die Wand kracht
+	//Es wird überprüft ob der Kopf in die Wand kracht mit Unterscheidung je nach Entscheidung bei Spielbeginn
 	private void crashMitWand() {
-		if(game.snake.getKopfX() < 0){
-			gameOver();
-		}
-		if(game.snake.getKopfX() > game.aufloesung-1){
-			gameOver();
-		}
-		if(game.snake.getKopfY() < 0){
-			gameOver();
-		}
-		if(game.snake.getKopfY() > game.aufloesung-1){
-			gameOver();
+		if(wand){
+			if(game.snake.getKopfX() < 0){
+				game.snake.kopf.setPosition(game.aufloesung - 1, game.snake.kopf.getY());
+			}
+			if(game.snake.getKopfX() > game.aufloesung-1){
+				game.snake.kopf.setPosition(0, game.snake.kopf.getY());
+			}
+			if(game.snake.getKopfY() < 0){
+				game.snake.kopf.setPosition(game.snake.kopf.getX() , game.aufloesung - 1);
+			}
+			if(game.snake.getKopfY() > game.aufloesung-1){
+				game.snake.kopf.setPosition(game.snake.kopf.getX() , 0);
+			}
+		}else{
+			if(game.snake.getKopfX() < 0){
+				gameOver();
+			}
+			if(game.snake.getKopfX() > game.aufloesung-1){
+				gameOver();
+			}
+			if(game.snake.getKopfY() < 0){
+				gameOver();
+			}
+			if(game.snake.getKopfY() > game.aufloesung-1){
+				gameOver();
+			}
 		}
 	}
 
@@ -64,7 +78,6 @@ public class Event {
 		}
 		punktzahl = 0;
 		game.t.interrupt();
-		
 	}
 	
 	//Popup Fenster für den Spielbeginn
@@ -72,8 +85,23 @@ public class Event {
 		new Thread() {
 			public void run() {
 				try{
+					Object[] options = {"Ja", "Nein"};
+					int n = JOptionPane.showOptionDialog(game.frame,"Wollen Sie durch Wände gehen können?",
+							"Highscore: " + highscore , JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,	options, options[0]) ;
+					if (n == 0) {
+						wand = true;
+					} else if (n == 1) {
+						wand = false;
+					} else {
+						System.exit(0);
+					}
+				}
+				catch (ArithmeticException e){
+					System.exit(0);
+				}
+				try{
 					Object[] options = {"Langsam", "Normal", "Schnell", "Beenden"};
-					spieltempo = JOptionPane.showOptionDialog(game.frame,"Wie schnell wollen sie spielen?",
+					spieltempo = JOptionPane.showOptionDialog(game.frame,"Wie schnell wollen Sie spielen?",
 							"Highscore: " + highscore , JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,	options, options[1]) + 1;
 					if (spieltempo != 4) {
 						punktzahl = 0;
