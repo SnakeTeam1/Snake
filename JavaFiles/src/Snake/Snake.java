@@ -1,10 +1,6 @@
 package Snake;
 
-import java.awt.*;
-import java.awt.geom.*;
-import java.util.ArrayList; 
-
-import javax.swing.text.Segment;
+import java.util.ArrayList;
 
 
 
